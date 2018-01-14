@@ -3,5 +3,61 @@ html {
 }
 
 body {
-	background: tomato;
+	background: #eee;
+}
+
+header {
+	background: white;
+	padding: 25px;
+}
+
+header,
+header nav ul {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+nav li {
+	list-style: none;
+	margin: 0 10px;
+}
+
+.user-form {
+	padding: 25px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.addForm {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 20px;
+	background: #4caf50;
+	color: white;
+}
+
+.addForm label {
+	margin: 10px;
+}
+
+.items {
+	width: 80%;
+	margin: 15px auto;
+	padding: 0;
+}
+
+.club-item {
+	list-style: none;
+	background: white;
+	margin-bottom: 10px;
+	padding: 25px 15px;
+	font-size: 25px;
+	box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
+}
+
+footer {
+	padding: 25px;
 }

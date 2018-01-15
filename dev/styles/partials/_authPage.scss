@@ -1,0 +1,69 @@
+.logInButtons {
+    width: 100vw;
+    height: 100vh;
+    font-size: 3rem;
+    position: absolute;
+    background: rgb(255, 136, 10);
+    padding: 25px;
+    top: 0;
+    transition: top 1.3s ease-in;
+
+    // display: flex;
+    // justify-content: space-between;
+    // align-items: center;
+
+    ul {
+        margin: 30vh auto 0 auto;
+        padding: 0;
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        display: block;
+    }
+
+    li {
+        text-align: center;
+        width: 50%;
+        list-style: none;
+        display: inline-block;
+    }
+    a, button {
+        text-decoration: none;
+        color: rgb(32, 32, 32);
+        background: white; 
+        padding: 15px 25px;
+    }
+    .user-form {
+        padding: 25px;
+        font-size: 2rem;
+    }
+    .addForm {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background: #4caf50;
+        color: white;
+    }
+    .addForm label {
+        margin: 10px;
+    }
+    input {
+        display: block;
+        max-width: 800px;
+        padding: 5px 15px;
+        margin: 15px auto;
+    }
+    button {
+        margin: 0 auto;
+        display: inherit;
+    }
+    input, button, a {
+        border-radius: 3px;
+        border: none;
+    }
+}
+.hideAuth {
+    top: -100vh;
+}

@@ -1,3 +1,30 @@
 .mainPage {
-    
+    background: rgb(45, 143, 0);
+
+    form {
+        padding: 50px;
+        font-size: 2rem;
+    }
+    .category {
+        width: 80%;
+        margin: 15px auto;
+        padding: 0;
+    }
+    ul {
+        margin: 0 auto;
+        padding: 0;
+        width: 90%;
+    }
+    .itemToPack {
+        list-style: none;
+        background: white;
+        margin-bottom: 10px;
+        padding: 25px 15px;
+        font-size: 25px;
+        box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.2);
+    }
+    .itemToPack, input, button {
+        border-radius: 3px;
+    }
+
 }

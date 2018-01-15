@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import Header from './components/Header';
 import Header from './header';
-import ClubItem from './clubItem';
+import ItemToPack from './itemToPack';
 import SplashPage from './splashPage';
 
 const config = {
@@ -29,6 +28,7 @@ class App extends React.Component {
             email: "",
             user: "",
             isAuth: false,
+            authPageClasses: "logInButtons"
         }
         this.addItem = this.addItem.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -67,7 +67,8 @@ class App extends React.Component {
         this.setState({
             isAuth: bool,
             email: email,
-            user: this.removePeriod(email)
+            user: this.removePeriod(email),
+            authPageClasses: "logInButtons hideAuth"
         }, () => this.getFirebaseData())
         console.log(this.state.user);
     }
@@ -111,18 +112,18 @@ class App extends React.Component {
         return (
             <div>
                 <SplashPage />
-                <Header isAuth={this.setIsAuth}/>
+                <Header isAuth={this.setIsAuth} authClasses={this.state.authPageClasses}/>
                 <section className="mainPage">
                     <form onSubmit={this.addItem} className="addForm">
                         <label htmlFor="item">Item: </label>
                         <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
-                        <label htmlFor="name">Name: </label>
-                        <input type="text" name="name" onChange={this.handleChange} value={this.state.name} />
+                        {/* <label htmlFor="name">Name: </label>
+                        <input type="text" name="name" onChange={this.handleChange} value={this.state.name} /> */}
                         <button>Add Item</button>
                     </form>
                     <ul className="clothing">
                         {this.state.items.map((item, i) => {
-                            return <ClubItem data={item} key={item.key} remove={this.removeItem} />
+                            return <ItemToPack data={item} key={item.key} remove={this.removeItem} />
                         })}
                     </ul>
                 </section>

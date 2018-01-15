@@ -3,6 +3,7 @@
     max-height: 100vh;
     width: 100vw;
     position: relative;
+    z-index: 2;
 
     .topWall {
         background: rgb(21, 124, 0);
@@ -22,41 +23,54 @@
         left: 0;
     }
     .topWall, .bottomWall {
-        transition: 1s ease-in;        
+        transition: height 1.25s ease-in,
+                    top 1.25s ease-in;        
     }
     .overhang {
-        width: 30vw;
-        height: 30vw;
+        width: 250px;
+        height: 250px;
         margin: 0 auto;
-        padding: 7%;
+        padding: 60px;
         background: rgb(21, 124, 0);
         border-radius: 50%;
         position: absolute;
         bottom: 0;
         left: 50vw;
-        transform: translate(-50%,36%);
+        transform: translate(-50%,42%);
         z-index: 2;
     }
     img {
-        transform: translateY(-1vw);
+        transform: translateY(-15px);
     }
     h1 {
-        margin: 5vh auto 10px auto;
-        color: rgb(255, 156, 8);
-        letter-spacing: 1.5px;
-        font-size: 6vw;
+        margin: 9vh auto 10px auto;
+        color: white;
+        font-size: 5rem;
         text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.7);
     }
     button {
-        font-size: 3vw;
-        margin: 0 auto;
-        padding: 10px 15px;
+        font-size: 2rem;
+        color: white;
+        margin: 9px auto 35px auto;
+        padding: 10px 20px;
         display: block;
         border: none;
+        background: rgb(255, 136, 0);
+        transition: 0.2s ease-in;
+        text-shadow: none;
+        position: relative;
+        top: 0;
+        border-radius: 3px;
+    }
+    button:hover, button:focus {
+        text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.7);
+        box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.7);
+        top: -3px;
     }
     h1, button {
         text-align: center;
         font-family: 'Patrick Hand', sans-serif;
+        letter-spacing: 1.5px;
     }
     .slideUp {
         top: -100vh;

@@ -1,8 +1,8 @@
 import React from 'react';
 
 export default class Header extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             formToShow: '',
             email: '',
@@ -48,12 +48,12 @@ export default class Header extends React.Component {
         if (this.state.formToShow === 'signup') {
             loginForm = (
                 <form onSubmit={this.signup} className="user-form">
-                    <label htmlFor="email">Email: </label>
-                    <input type="email" name="email" onChange={this.handleChange} />
-                    <label htmlFor="password">Password: </label>
-                    <input type="password" name="password" onChange={this.handleChange} />
-                    <label htmlFor="confirm">Confirm Password:</label>
-                    <input type="password" name="confirm" onChange={this.handleChange} />
+                    <label htmlFor="email" className="visually-hidden">Email: </label>
+                    <input type="email" name="email" onChange={this.handleChange} placeholder="Email"/>
+                    <label htmlFor="password" className="visually-hidden">Password: </label>
+                    <input type="password" name="password" onChange={this.handleChange} placeholder="Password"/>
+                    <label htmlFor="confirm" className="visually-hidden">Confirm Password:</label>
+                    <input type="password" name="confirm" onChange={this.handleChange} placeholder="Confirm password"/>
                     <button>Sign In</button>
                 </form>
             );
@@ -61,25 +61,23 @@ export default class Header extends React.Component {
         else if (this.state.formToShow === "login") {
             loginForm = (
                 <form onSubmit={this.login} className="user-form">
-                    <label htmlFor="email">Email: </label>
-                    <input type="email" name="email" onChange={this.handleChange} />
-                    <label htmlFor="password">Password: </label>
-                    <input type="password" name="password" onChange={this.handleChange} />
+                    <label htmlFor="email" className="visually-hidden">Email: </label>
+                    <input type="email" name="email" onChange={this.handleChange} placeholder="Email"/>
+                    <label htmlFor="password" className="visually-hidden">Password: </label>
+                    <input type="password" name="password" onChange={this.handleChange} placeholder="Password"/>
                     <button>Log In</button>
                 </form>
             );
         }
         return (
             <div>
-                <header>
-                    <nav>
-                        <ul>
-                            <li><a href="" className="signup" onClick={this.formToShow}>Sign Up</a></li>
-                            <li><a href="" className="login" onClick={this.formToShow}>Log In</a></li>
-                        </ul>
-                    </nav>
-                </header>
-                {loginForm}
+                <section className={this.props.authClasses}>
+                    <ul>
+                        <li><a href="" className="signup" onClick={this.formToShow}>Sign Up</a></li>
+                        <li><a href="" className="login" onClick={this.formToShow}>Log In</a></li>
+                    </ul>
+                    {loginForm}
+                </section>
             </div>
         )
     }

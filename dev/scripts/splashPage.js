@@ -24,13 +24,12 @@ class SplashPage extends React.Component {
             <section className="splashPage">
                 <div className={this.state.topWallClasses}>
                     <h1>PackTracker</h1>
-                    <button onClick={this.enterSite}>Get tracking!</button>
+                    <button onClick={this.enterSite}>start tracking!</button>
                     <div className="overhang">
                         <img src="public/assets/backpackRed.png" alt=""/>
                     </div>
                 </div>
                 <div className={this.state.bottomWallClasses}></div>
-                
             </section>
         )
     }

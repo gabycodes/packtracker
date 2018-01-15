@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 // import Header from './components/Header';
 import Header from './header';
 import ClubItem from './clubItem';
+import SplashPage from './splashPage';
 
 const config = {
     apiKey: "AIzaSyB9g92lbFyfs_qNWhxog2Re3PPbaXN9W5A",
@@ -19,17 +20,28 @@ class App extends React.Component {
         super();
         this.state = {
             items: [{
-                name: "Gaby",
-                item: "Jeans"
+                // name: "Gaby",
+                item: ""
+                
             }],
             name: "",
-            item: ""
+            item: "",
+            email: "",
+            user: "",
+            isAuth: false,
         }
         this.addItem = this.addItem.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.setIsAuth = this.setIsAuth.bind(this);
+        this.removePeriod = this.removePeriod.bind(this);
+        this.getFirebaseData = this.getFirebaseData.bind(this);
     }
     componentDidMount() {
-        const dbRef = firebase.database().ref();
+    }
+    getFirebaseData() {
+        const user = this.state.user;
+        const category = "clothing"
+        const dbRef = firebase.database().ref('users/' + user + "/" + category);
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
                 dbRef.on("value", (firebaseData) => {
@@ -37,7 +49,7 @@ class App extends React.Component {
                     const itemsData = firebaseData.val();
 
                     for (let itemKey in itemsData) {
-                        itemsData[itemKey].key = itemKey// We're adding a key property, in addition to name and item
+                        itemsData[itemKey].key = itemKey
                         itemsArray.push(itemsData[itemKey])
                     }
 
@@ -49,7 +61,15 @@ class App extends React.Component {
             else {
                 console.log("You are not signed in");
             }
-        });// Closes AuthChanged
+        });// 
+    }
+    setIsAuth(bool, email) {
+        this.setState({
+            isAuth: bool,
+            email: email,
+            user: this.removePeriod(email)
+        }, () => this.getFirebaseData())
+        console.log(this.state.user);
     }
     handleChange(e) {
         this.setState({
@@ -66,20 +86,32 @@ class App extends React.Component {
             item: "",
             name: ""
         })
-        const dbRef = firebase.database().ref();
+        // const dbRef = firebase.database().ref();
+        const user = this.state.user;
+        const category = "clothing"
+        const dbRef = firebase.database().ref('users/' + user + "/" + category);
         dbRef.push(usersItem);
     }
 
     removeItem(itemToRemove) {
-        console.log(itemToRemove);
-        const dbRef = firebase.database().ref(itemToRemove);
-        dbRef.remove();
+        console.log({itemToRemove});
+        // console.log(this.state.user);
+        // const user = this.state.user;
+        const category = "clothing"
+        // const dbRef = firebase.database().ref('users/' + user + "/" + category + "/" + itemToRemove)
+        // const dbRef = firebase.database().ref(itemToRemove);
+
+        // database.remove();
+        // database.child(itemToRemove).remove();
+    }
+    removePeriod(email) {
+        return email.replace(/[.]/g, "");
     }
     render() {
-
         return (
             <div>
-                <Header />
+                <SplashPage />
+                <Header isAuth={this.setIsAuth}/>
                 <section>
                     <form onSubmit={this.addItem} className="addForm">
                         <label htmlFor="item">Item: </label>
@@ -88,7 +120,7 @@ class App extends React.Component {
                         <input type="text" name="name" onChange={this.handleChange} value={this.state.name} />
                         <button>Add Item</button>
                     </form>
-                    <ul className="items">
+                    <ul className="clothing">
                         {this.state.items.map((item, i) => {
                             return <ClubItem data={item} key={item.key} remove={this.removeItem} />
                         })}

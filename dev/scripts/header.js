@@ -32,6 +32,7 @@ export default class Header extends React.Component {
                 .then((data) => {
                     console.log(data);
                 })
+            this.props.isAuth(true, this.state.email);
         }
     }
     login(e) {
@@ -40,6 +41,7 @@ export default class Header extends React.Component {
             .then((data) => {
                 console.log(data);
             })
+        this.props.isAuth(true, this.state.email);
     }
     render() {
         let loginForm = '';

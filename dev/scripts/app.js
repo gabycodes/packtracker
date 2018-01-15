@@ -112,7 +112,7 @@ class App extends React.Component {
             <div>
                 <SplashPage />
                 <Header isAuth={this.setIsAuth}/>
-                <section>
+                <section className="mainPage">
                     <form onSubmit={this.addItem} className="addForm">
                         <label htmlFor="item">Item: </label>
                         <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />

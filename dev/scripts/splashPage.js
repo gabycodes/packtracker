@@ -2,17 +2,34 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class SplashPage extends React.Component {
+    constructor() {
+        super();
+        this.state = {
+            topWallClasses: "topWall",
+            bottomWallClasses: "bottomWall"
+        }
+        this.enterSite = this.enterSite.bind(this);
+    }
+
+    enterSite() {
+        this.setState({
+            topWallClasses: "topWall slideUp",
+            bottomWallClasses: "bottomWall slideDown"
+        })
+
+    }
+
     render() {
         return (
             <section className="splashPage">
-                <div className="topWall">
+                <div className={this.state.topWallClasses}>
                     <h1>PackTracker</h1>
-                    <p>P-p-p-pack it, t-t-t-track it.</p>
+                    <button onClick={this.enterSite}>Get tracking!</button>
                     <div className="overhang">
-                        <img src="public/assets/backpackGreen.png" alt=""/>
+                        <img src="public/assets/backpackRed.png" alt=""/>
                     </div>
                 </div>
-                <div className="bottomWall"></div>
+                <div className={this.state.bottomWallClasses}></div>
                 
             </section>
         )

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Header from './header';
 import ItemToPack from './itemToPack';
 import SplashPage from './splashPage';
-import Nav from './nav';
+import PackingList from './packingList';
 
 const config = {
     apiKey: "AIzaSyB9g92lbFyfs_qNWhxog2Re3PPbaXN9W5A",
@@ -24,13 +24,12 @@ class App extends React.Component {
                 item: ""
                 
             }],
-            name: "",
+            name: "name",
             item: "",
-            email: "",
-            user: "",
+            email: "email",
+            user: "user",
             isAuth: false,
-            authPageClasses: "logInButtons",
-            currentCategory: ""
+            authPageClasses: "logInButtons"
         }
         this.addItem = this.addItem.bind(this);
         this.removeItem = this.removeItem.bind(this);
@@ -106,24 +105,46 @@ class App extends React.Component {
     }
     render() {
         return (
-            <div>
+            // <div>
+            //     <SplashPage />
+            //     <Header isAuth={this.setIsAuth} authClasses={this.state.authPageClasses}/>
+            //     <section className="mainPage">
+            //         <form onSubmit={this.addItem} className="addForm">
+            //             <label htmlFor="item">Item: </label>
+            //             <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
+            //             <button>Add Item</button>
+            //         </form>
+            //         <div className="listContainer Clothing">
+            //             <ul className="clothing">
+            //                 {this.state.items.map((item, i) => {
+            //                     return <ItemToPack data={item} key={item.key} remove={this.removeItem} />
+            //                 })}
+            //             </ul>
+
+            //         </div>
+            //     </section>
+            // </div>
+
+
+            <div className="">
                 <SplashPage />
-                <Header isAuth={this.setIsAuth} authClasses={this.state.authPageClasses}/>
-                <section className="mainPage">
-                    <div className="listContainer clothing">
+                <Header isAuth={this.setIsAuth} authClasses={this.state.authPageClasses} />
+                <PackingList isAuth={this.state.isAuth} email={this.state.email} user={this.state.user} name={this.state.name} />
+                {/* <section className="mainPage">
+                    // <div className="listContainer clothing">
                         <h3>Clothing</h3>
+                        <ul className="clothing">
+                            {this.state.items.map((item, i) => {
+                                return <ItemToPack data={item} key={item.key} remove={this.removeItem} category="clothing" />
+                            })}
+                        </ul>
                         <form onSubmit={this.addItem} className="addForm">
                             <label htmlFor="item">Item: </label>
                             <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
                             <button>Add Item</button>
                         </form>
-                        <ul className="clothing">
-                            {this.state.items.map((item, i) => {
-                                return <ItemToPack data={item} key={item.key} remove={this.removeItem} category="clothing"/>
-                            })}
-                        </ul>
                     </div>
-                </section>
+                </section> */}
             </div>
         )
     }

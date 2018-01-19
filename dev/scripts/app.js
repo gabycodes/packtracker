@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Header from './header';
 import ItemToPack from './itemToPack';
 import SplashPage from './splashPage';
+import Nav from './nav';
 
 const config = {
     apiKey: "AIzaSyB9g92lbFyfs_qNWhxog2Re3PPbaXN9W5A",
@@ -28,9 +29,11 @@ class App extends React.Component {
             email: "",
             user: "",
             isAuth: false,
-            authPageClasses: "logInButtons"
+            authPageClasses: "logInButtons",
+            currentCategory: ""
         }
         this.addItem = this.addItem.bind(this);
+        this.removeItem = this.removeItem.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.setIsAuth = this.setIsAuth.bind(this);
         this.removePeriod = this.removePeriod.bind(this);
@@ -52,7 +55,6 @@ class App extends React.Component {
                         itemsData[itemKey].key = itemKey
                         itemsArray.push(itemsData[itemKey])
                     }
-
                     this.setState({
                         items: itemsArray
                     });
@@ -61,7 +63,7 @@ class App extends React.Component {
             else {
                 console.log("You are not signed in");
             }
-        });// 
+        });
     }
     setIsAuth(bool, email) {
         this.setState({
@@ -87,7 +89,6 @@ class App extends React.Component {
             item: "",
             name: ""
         })
-        // const dbRef = firebase.database().ref();
         const user = this.state.user;
         const category = "clothing"
         const dbRef = firebase.database().ref('users/' + user + "/" + category);
@@ -95,15 +96,10 @@ class App extends React.Component {
     }
 
     removeItem(itemToRemove) {
-        console.log({itemToRemove});
-        // console.log(this.state.user);
-        // const user = this.state.user;
+        const user = this.state.user;
         const category = "clothing"
-        // const dbRef = firebase.database().ref('users/' + user + "/" + category + "/" + itemToRemove)
-        // const dbRef = firebase.database().ref(itemToRemove);
-
-        // database.remove();
-        // database.child(itemToRemove).remove();
+        const database = firebase.database().ref('users/' + user + "/" + category)
+        database.child(itemToRemove).remove();
     }
     removePeriod(email) {
         return email.replace(/[.]/g, "");
@@ -114,18 +110,19 @@ class App extends React.Component {
                 <SplashPage />
                 <Header isAuth={this.setIsAuth} authClasses={this.state.authPageClasses}/>
                 <section className="mainPage">
-                    <form onSubmit={this.addItem} className="addForm">
-                        <label htmlFor="item">Item: </label>
-                        <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
-                        {/* <label htmlFor="name">Name: </label>
-                        <input type="text" name="name" onChange={this.handleChange} value={this.state.name} /> */}
-                        <button>Add Item</button>
-                    </form>
-                    <ul className="clothing">
-                        {this.state.items.map((item, i) => {
-                            return <ItemToPack data={item} key={item.key} remove={this.removeItem} />
-                        })}
-                    </ul>
+                    <div className="listContainer clothing">
+                        <h3>Clothing</h3>
+                        <form onSubmit={this.addItem} className="addForm">
+                            <label htmlFor="item">Item: </label>
+                            <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
+                            <button>Add Item</button>
+                        </form>
+                        <ul className="clothing">
+                            {this.state.items.map((item, i) => {
+                                return <ItemToPack data={item} key={item.key} remove={this.removeItem} category="clothing"/>
+                            })}
+                        </ul>
+                    </div>
                 </section>
             </div>
         )

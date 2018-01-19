@@ -39,9 +39,8 @@ export default class Header extends React.Component {
         e.preventDefault();
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
             .then((data) => {
-                console.log(data);
+                this.props.isAuth(true, this.state.email);
             })
-        this.props.isAuth(true, this.state.email);
     }
     render() {
         let loginForm = '';

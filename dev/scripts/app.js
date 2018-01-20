@@ -71,7 +71,7 @@ class App extends React.Component {
             user: this.removePeriod(email),
             authPageClasses: "logInButtons hideAuth"
         }, () => this.getFirebaseData())
-        console.log(this.state.user);
+        // console.log(this.state.user);
     }
     handleChange(e) {
         this.setState({

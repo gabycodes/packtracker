@@ -6,8 +6,12 @@ class PackingList extends React.Component {
     constructor() {
         super();
         this.state = {
-            items: [{
-                name: "",
+            clothing: [{
+                // name: "",
+                item: ""
+            }],
+            misc: [{
+                // name: "",
                 item: ""
             }],
             item: "",
@@ -21,27 +25,15 @@ class PackingList extends React.Component {
         this.getFirebaseData = this.getFirebaseData.bind(this);
     }
     componentWillReceiveProps() {
-        // console.log(this.props.user);
-        // console.log(this.props.email);
-        // console.log(this.props.isAuth);
         this.getFirebaseData();
     }
     getFirebaseData() {
-        // if(this.state.email === "") {
-        //     this.setState({
-        //         isAuth: this.props.isAuth,
-        //         email: this.props.email,
-        //         user: this.props.user,
-        //         authPageClasses: "logInButtons hideAuth"
-        //     }, () => this.getFirebaseData())
-        // }
-
         const user = this.props.user;
-        const category = "clothing"
-        const dbRef = firebase.database().ref('users/' + user + "/" + category);
+        const clothing = firebase.database().ref('users/' + user + "/packingList/clothing");
+        const misc = firebase.database().ref('users/' + user + "/packingList/misc");
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-                dbRef.on("value", (firebaseData) => {
+                clothing.on("value", (firebaseData) => {
                     const itemsArray = [];
                     const itemsData = firebaseData.val();
 
@@ -50,7 +42,19 @@ class PackingList extends React.Component {
                         itemsArray.push(itemsData[itemKey])
                     }
                     this.setState({
-                        items: itemsArray
+                        clothing: itemsArray
+                    });
+                });
+                misc.on("value", (firebaseData) => {
+                    const itemsArray = [];
+                    const itemsData = firebaseData.val();
+
+                    for (let itemKey in itemsData) {
+                        itemsData[itemKey].key = itemKey
+                        itemsArray.push(itemsData[itemKey])
+                    }
+                    this.setState({
+                        misc: itemsArray
                     });
                 });
             }
@@ -64,7 +68,8 @@ class PackingList extends React.Component {
             [e.target.name]: e.target.value
         });
     }
-    addItem(e) {
+    addItem(category, e) {
+        console.log(category);        
         e.preventDefault();
         console.log("addItem...");
         const usersItem = {
@@ -76,33 +81,49 @@ class PackingList extends React.Component {
             name: ""
         })
         const user = this.props.user;
-        const category = "clothing"
-        const dbRef = firebase.database().ref('users/' + user + "/" + category);
+        // const category = "clothing"
+        const dbRef = firebase.database().ref('users/' + user + "/" + 'packingList' + '/' + category);
         dbRef.push(usersItem);
-
     }
 
-    removeItem(itemToRemove) {
+    removeItem(itemToRemove, category) {
+        // console.log(itemToRemove,category);
+        console.log(this.props.data.item);
+        console.log(this.data.item);
         const user = this.props.user;
-        const category = "clothing"
-        const database = firebase.database().ref('users/' + user + "/" + category)
+        const database = firebase.database().ref('users/' + user + "/" + 'packingList' + '/' + category)
         database.child(itemToRemove).remove();
     }
     render() {
         return (
-            <div className="listContainer clothing">
-                <h3>Clothing</h3>
-                <form onSubmit={this.addItem} className="addForm">
-                    <label htmlFor="item">Item: </label>
-                    <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
-                    <button>Add Item</button>
-                </form>
-                <ul className="clothing">
-                    {this.state.items.map((item, i) => {
-                        return <ItemToPack data={item} key={item.key} remove={this.removeItem} category="clothing" />
-                    })}
-                </ul>
-            </div>  
+            <div className="parent">
+                <div className="listContainer clothing">
+                    <h3>Clothing</h3>
+                    <ul className="clothing">
+                        {this.state.clothing.map((item, i) => {
+                            return <ItemToPack data={item} key={item.key} remove={(e) => this.removeItem("clothing")} category="clothing" />
+                        })}
+                    </ul>
+                    <form onSubmit={(e) => this.addItem("clothing", e)} className="addForm">
+                        <label htmlFor="item">Item: </label>
+                        <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
+                        <button>Add Item</button>
+                    </form>
+                </div>  
+                <div className="listContainer toiletries">
+                    <h3>Misc</h3>
+                    <ul className="misc">
+                        {this.state.misc.map((item, i) => {
+                            return <ItemToPack data={item} key={item.key} remove={(e) => this.removeItem(this, "misc")} category="misc" />
+                        })}
+                    </ul>
+                    <form onSubmit={(e) => this.addItem("misc", e)} className="addForm">
+                        <label htmlFor="item">Item: </label>
+                        <input type="text" name="item" onChange={this.handleChange} value={this.state.item} />
+                        <button>Add Item</button>
+                    </form>
+                </div>  
+            </div>
         )
     }
 }

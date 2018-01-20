@@ -87,9 +87,6 @@ class PackingList extends React.Component {
     }
 
     removeItem(itemToRemove, category) {
-        // console.log(itemToRemove,category);
-        console.log(this.props.data.item);
-        console.log(this.data.item);
         const user = this.props.user;
         const database = firebase.database().ref('users/' + user + "/" + 'packingList' + '/' + category)
         database.child(itemToRemove).remove();
@@ -101,7 +98,7 @@ class PackingList extends React.Component {
                     <h3>Clothing</h3>
                     <ul className="clothing">
                         {this.state.clothing.map((item, i) => {
-                            return <ItemToPack data={item} key={item.key} remove={(e) => this.removeItem("clothing")} category="clothing" />
+                            return <ItemToPack data={item} key={item.key} remove={this.removeItem} category="clothing" />
                         })}
                     </ul>
                     <form onSubmit={(e) => this.addItem("clothing", e)} className="addForm">
@@ -114,7 +111,7 @@ class PackingList extends React.Component {
                     <h3>Misc</h3>
                     <ul className="misc">
                         {this.state.misc.map((item, i) => {
-                            return <ItemToPack data={item} key={item.key} remove={(e) => this.removeItem(this, "misc")} category="misc" />
+                            return <ItemToPack data={item} key={item.key} remove={this.removeItem} category="misc" />
                         })}
                     </ul>
                     <form onSubmit={(e) => this.addItem("misc", e)} className="addForm">
